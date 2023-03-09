@@ -13,7 +13,7 @@ finally:
     fa = sys.stdin
 
     for line in fa:
-        if "@" in line:
+        if ">" in line:
             curr = str(line)
         else:
             wline = line.rstrip().upper()
