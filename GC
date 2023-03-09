@@ -1,32 +1,26 @@
 #!/usr/bin/env python
 
 import sys
-arg = sys.argv
+args = sys.argv    
 
-try:
-    log = arg[1]
-except:
-    log = 0
-finally:
+MAX = int(args[args.index("--max")+1])
+MIN = int(args[args.index("--min")+1])
 
-    out = sys.stdout
-    err = sys.stderr
-    fa = sys.stdin
+out = sys.stdout
+err = sys.stderr
+fa = sys.stdin
 
-    for line in fa:
-        if ">" in line:
-            curr = str(line)
+for line in fa:
+    if ">" in line:
+        curr = str(line)
+    else:
+        mline = line.rstrip().upper()
+        G = mline.count('G')
+        C = mline.count('C')
+        GC = (G+C)/len(mline) *100
+
+        if GC > MIN and GC < MAX:
+            out.write(curr+line.upper())
+            err.write("Done! Sequence has processed.\n")
         else:
-            wline = line.rstrip().upper()
-            G = wline.count('G')
-            C = wline.count('C')
-            GC = (G+C)/len(wline)
-
-            if GC < arg[2] and GC > arg[3]:
-                out.write(curr+line)
-                if log:
-                    err.write("Done! Sequence has processed.\n")
-            else:
-                if log:
-                    err.write('Warrning! GC-COMPOSITION DOES NOT BELONG TO THE RANGE.\n')
-
+            err.write('Warrning! GC-COMPOSITION DOES NOT BELONG TO THE RANGE.\n')
